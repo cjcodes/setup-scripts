@@ -47,21 +47,6 @@ hs.timer.doEvery(30, function ()
   end
 end)
 
----------
--- VPN --
----------
-
--- tell application "Viscosity" to connect "Twilio Engineering VPN 2022"
--- tell application "Viscosity" to disconnectall
-
-engvpn = 'tell application "Viscosity" to connect "Twilio Engineering VPN 2022 Q4"'
-oncallvpn = 'tell application "Viscosity" to connect "Twilio Engineering On-Call 2022 Q4"'
-disconnect = 'tell application "Viscosity" to disconnectall'
-
-hs.hotkey.bind({'⌥', '⌃', '⌘'}, '1', function () hs.osascript.applescript(disconnect) end)
-hs.hotkey.bind({'⌥', '⌃', '⌘'}, '2', function () hs.osascript.applescript(engvpn) end)
-hs.hotkey.bind({'⌥', '⌃', '⌘'}, '3', function () hs.osascript.applescript(oncallvpn) end)
-
 ----------------------
 -- Typing shortcuts --
 ----------------------
