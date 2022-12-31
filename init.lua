@@ -101,18 +101,17 @@ hs.hotkey.bind({'⌘', '⌃'}, '`', function () p:show() end)
 
 scroll_script = [[
 try
-tell application "System Preferences"
-  activate
-  set current pane to pane "com.apple.preference.trackpad"
+do shell script "open x-apple.systempreferences:com.apple.Trackpad-Settings.extension"
+delay 1
+tell application "System Events"
+	tell process "System Settings"
+		click radio button 2 of tab group 1 of group 1 of group 2 of splitter group 1 of group 1 of window "Trackpad"
+		delay 0.5
+		click checkbox "Natural scrolling" of group 1 of scroll area 1 of group 1 of group 2 of splitter group 1 of group 1 of window "Trackpad"
+	end tell
 end tell
 delay 0.5
-tell application "System Events"
-  tell process "System Preferences"
-    click radio button "Scroll & Zoom" of tab group 1 of window "Trackpad"
-    click checkbox 1 of tab group 1 of window "Trackpad"
-    tell application "System Preferences" to quit
-  end tell
-end tell
+tell application "System Settings" to quit
 end try
 ]]
 
