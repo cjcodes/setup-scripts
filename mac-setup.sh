@@ -85,6 +85,14 @@ if [ ! -d ~/.hammerspoon ]; then
   cp ./init.lua ~/.hammerspoon
 fi
 
+if [ ! -f ~/.vimrc ]; then
+  cp ./.vimrc ~/.vimrc
+fi
+
+wget -P ~ https://github.com/arcticicestudio/nord-dircolors/blob/develop/src/dir_colors
+mv ~/dir_colors ~/.dir_colors
+echo "test -r \"~/.dir_colors\" && eval \$(dircolors ~/.dir_colors)" >> ~/.zshrc
+
 if [ ! -d /Applications/CameraController.app ]; then
   wget https://github.com/Itaybre/CameraController/releases/latest/download/CameraController.zip
   unzip CameraController.zip
