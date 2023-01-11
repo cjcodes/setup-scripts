@@ -14,6 +14,7 @@ PACKAGES=(
   telnet
   watch
   wget
+  gh
 )
 
 CASKS=(
@@ -36,9 +37,15 @@ CASKS=(
 VSCODE_EXT=(
   arcticicestudio.nord-visual-studio-code
   Orta.vscode-jest
+  ms-vscode.makefile-tools
+  EditorConfig.EditorConfig
 )
 
 xcode-select --install
+
+################
+### Homebrew ###
+################
 
 # Check for Homebrew to be present, install if it's missing
 if test ! $(which brew); then
@@ -46,56 +53,87 @@ if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# Homebrew post-install steps
 if ! grep -q Homebrew ~/.zprofile; then
   echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~/.zprofile
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Install packages and casks
 brew tap ${TAPS[@]}
-
 brew update
-
 brew install ${PACKAGES[@]}
-
 brew install ${CASKS[@]} --cask
 
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+##########################################
+### Miscellaneous OS settings and apps ###
+##########################################
 
-code --install-extension ${VSCODE_EXT[@]}
+# Delete old trash items
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
 
-if [ ! -d ~/.oh-my-zsh ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-if ! grep -q asdf ~/.zprofile; then
-  echo '. /opt/homebrew/opt/asdf/libexec/asdf.sh' >> ~/.zprofile
-fi
-
-if ! defaults read com.apple.terminal | grep -q Nord; then
-  wget https://raw.githubusercontent.com/arcticicestudio/nord-terminal-app/develop/src/xml/Nord.terminal
-  open Nord.terminal
-  defaults write com.apple.terminal "Default Window Settings" -string "Nord"
-  defaults write com.apple.terminal "Startup Window Settings" -string "Nord"
-  rm Nord.terminal
-fi
-
-if [ ! -d ~/.hammerspoon ]; then
-  mkdir ~/.hammerspoon
-  cp ./init.lua ~/.hammerspoon
-fi
-
-if [ ! -f ~/.vimrc ]; then
-  cp ./.vimrc ~/.vimrc
-fi
-
-wget -P ~ https://github.com/arcticicestudio/nord-dircolors/blob/develop/src/dir_colors
-mv ~/dir_colors ~/.dir_colors
-echo "test -r \"~/.dir_colors\" && eval \$(dircolors ~/.dir_colors)" >> ~/.zshrc
-
+# Install CameraController (not available in homebrew)
 if [ ! -d /Applications/CameraController.app ]; then
   wget https://github.com/Itaybre/CameraController/releases/latest/download/CameraController.zip
   unzip CameraController.zip
   rm CameraController.zip
   mv CameraController.app /Applications/
 fi
+
+########################
+### VS Code Settings ###
+########################
+
+code --install-extension ${VSCODE_EXT[@]}
+
+#################
+### oh-my-zsh ###
+#################
+
+if [ ! -d ~/.oh-my-zsh ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+############
+### asdf ###
+############
+
+if ! grep -q asdf ~/.zprofile; then
+  echo '. /opt/homebrew/opt/asdf/libexec/asdf.sh' >> ~/.zprofile
+fi
+
+############################
+### Terminal preferences ###
+############################
+
+if ! defaults read com.apple.terminal | grep -q Nord; then
+  wget https://raw.githubusercontent.com/arcticicestudio/nord-terminal-app/develop/src/xml/Nord.terminal
+  END_OF_DICT=`grep -n "^</dict>" Nord.terminal | cut -d : -f 1`
+  head -n $(($END_OF_DICT-1)) Nord.terminal >> Nord-cj.terminal
+  cat terminal-prefs.txt >> Nord-cj.terminal
+  tail -n +$END_OF_DICT Nord.terminal >> Nord-cj.terminal
+  open Nord.terminal
+  defaults write com.apple.terminal "Default Window Settings" -string "Nord"
+  defaults write com.apple.terminal "Startup Window Settings" -string "Nord"
+  rm Nord.terminal
+  rm Nord-cj.terminal
+fi
+
+##############################
+### Hammerspoon automation ###
+##############################
+
+if [ ! -d ~/.hammerspoon ]; then
+  mkdir ~/.hammerspoon
+  ln -s $(pwd)/init.lua ~/.hammerspoon/init.lua
+fi
+
+#################
+### Vim setup ###
+#################
+
+if [ ! -f ~/.vimrc ]; then
+  ln -s $(pwd)/vimrc.lua ~/.vimrc
+fi
+
