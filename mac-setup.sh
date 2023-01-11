@@ -81,6 +81,9 @@ if [ ! -d /Applications/CameraController.app ]; then
   mv CameraController.app /Applications/
 fi
 
+# Alert me when there are unstaged changes
+echo "if [[ -n \$(git -C $(pwd) status -s) ]]; then echo \"\\e[31mYou have unstaged changes in $(pwd).\\e[0m\"; fi" >> ~/.zprofile
+
 ########################
 ### VS Code Settings ###
 ########################
