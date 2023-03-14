@@ -15,6 +15,8 @@ PACKAGES=(
   watch
   wget
   gh
+  pianobar
+  tmux
 )
 
 CASKS=(
@@ -27,11 +29,11 @@ CASKS=(
   1password-cli
   signal
   caffeine
-  datagrip
   pandora
   monitorcontrol
   tidal
   todoist
+  jetbrains-toolbox
 )
 
 VSCODE_EXT=(
