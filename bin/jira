@@ -1,0 +1,149 @@
+#!/bin/zsh
+
+source ~/code/setup-scripts/.env
+
+AUTH_HEADER="Authorization: Basic $(echo -n "$JIRA_USERNAME:$JIRA_PASSWORD" | base64)"
+CONTENT_TYPE="Content-Type: application/json"
+
+case $1 in
+
+  #######################
+  # CREATE A NEW TICKET #
+  #######################
+  new)
+    read "summary?Summary: "
+
+    read "description?Description: "
+
+    read "inject?Inject immediately? (will assign to me instead of adding to unassigned backlog) (y/n): "
+    [[ "$inject" == [Yy]* ]] && assignee="{\"name\":\"$JIRA_USERNAME\"}" || assignee="null"
+
+    read "progress?Set to in progress?: "
+
+    read -d '' json << EOM
+    {
+      "fields": {
+        "project": {"key": "$JIRA_PROJECT"},
+        "summary": "$summary",
+        "description": "$description",
+        "issuetype": {"id": $JIRA_ISSUE_TYPE},
+        "${JIRA_EPIC_FIELD_ID}": "${JIRA_DEFAULT_EPIC}",
+        "assignee": $assignee
+      }
+    }
+EOM
+
+    ISSUE_KEY=`curl \
+      -s \
+      -X POST \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      --data "$json" \
+      $JIRA_ENDPOINT/rest/api/latest/issue \
+      | jq -r '.key'`
+
+    echo
+    echo "CREATED \e[31m$ISSUE_KEY\e[0m"
+    echo
+
+    if [[ "$progress" == [Yy]* ]]; then
+      curl \
+        -s \
+        -X POST \
+        -H "$AUTH_HEADER" \
+        -H "$CONTENT_TYPE" \
+        --data "{\"transition\":{\"id\":\"$JIRA_PROGRESS_TRANSITION_ID\"}}" \
+        $JIRA_ENDPOINT/rest/api/latest/issue/$ISSUE_KEY/transitions
+    fi
+    ;;
+
+  #####################
+  # DO WEEKLY RELEASE #
+  #####################
+  release)
+    RELEASE_NAME="cj-`date +%F`"
+    read -d '' json << EOM
+    {
+      "description": "",
+      "name": "$RELEASE_NAME",
+      "archived": false,
+      "released": false,
+      "releaseDate": "`date +%F`",
+      "project": "$JIRA_PROJECT"
+    }
+EOM
+
+    DATA=`curl \
+      -s \
+      -X GET \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      $JIRA_ENDPOINT/rest/api/latest/version/47434`
+
+    echo $DATA
+    exit 0
+
+    # Create the release
+    RELEASE_ID=`curl \
+      -s \
+      -X POST \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      --data "$json" \
+      $JIRA_ENDPOINT/rest/api/latest/version \
+      | jq -r '.id'`
+
+    # THIS IS NOT WORKING YET, JIRA ISSUES
+    # Add issues to the release
+    read -d '' json << EOM
+    {
+      "jql": "project=$JIRA_PROJECT AND 'Epic Link' = $JIRA_DEFAULT_EPIC AND fixVersion IS NULL AND resolution IS NOT NULL",
+      "maxResults": 50,
+      "fields": [
+        "fixVersion"
+      ]
+    }
+EOM
+
+    ISSUES=(`curl \
+      -s \
+      -X POST \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      --data "$json" \
+      $JIRA_ENDPOINT/rest/api/latest/search \
+      | jq -r '.issues[] | .key'`)
+
+    for issue in "${ISSUES[@]}"; do
+      curl \
+        -s \
+        -X PUT \
+        -H "$AUTH_HEADER" \
+        -H "$CONTENT_TYPE" \
+        --data "{\"fields\":{\"fixVersions\":[{\"name\":\"$RELEASE_NAME\"}]}}" \
+        $JIRA_ENDPOINT/rest/api/latest/issue/$issue
+    done
+
+    exit 0
+
+    # Mark the release as released
+    curl \
+      -s \
+      -X PUT \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      --data "{\"released\":true}" \
+      $JIRA_ENDPOINT/rest/api/latest/version/$RELEASE_ID
+
+    # Update the latest release filter
+    FILTER_TEXT="fixVersion=$RELEASE_NAME"
+    curl \
+      -s \
+      -X PUT \
+      -H "$AUTH_HEADER" \
+      -H "$CONTENT_TYPE" \
+      --data "{\"jql\":\"$FILTER_TEXT\"}" \
+      $JIRA_ENDPOINT/rest/api/latest/version/$JIRA_RELEASE_FILTER_ID
+    ;;
+
+esac
