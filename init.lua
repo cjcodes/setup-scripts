@@ -13,6 +13,7 @@ units = {
   full        = { x = 0,   y = 0,   w = 1,   h = 1    },
   lefthalf    = { x = 0,   y = 0,   w = 1/2, h = 1    },
   righthalf   = { x = 1/2, y = 0,   w = 1/2, h = 1    },
+  zoom        = { x = 1/6, y = 0,   w = 1/3, h = 1    },
 }
 
 -- ⇧ ⌥ ⌃ ⌘
@@ -29,6 +30,7 @@ hs.hotkey.bind(mod, 'r', function() hs.window.focusedWindow():move(units.right23
 hs.hotkey.bind(mod, 't', function() hs.window.focusedWindow():move(units.mid23, nil, true) end)
 hs.hotkey.bind(mod, 'q', function() hs.window.focusedWindow():move(units.lefthalf, nil, true) end)
 hs.hotkey.bind(mod, 'w', function() hs.window.focusedWindow():move(units.righthalf, nil, true) end)
+hs.hotkey.bind(mod, 'z', function() hs.window.focusedWindow():move(units.zoom, nil, true) end)
 
 --------------------------------
 -- Ethernet Loss Notification --
