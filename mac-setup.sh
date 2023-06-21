@@ -17,6 +17,7 @@ PACKAGES=(
   gh
   pianobar
   tmux
+  terraform
 )
 
 CASKS=(
