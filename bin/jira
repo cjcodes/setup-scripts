@@ -4,6 +4,30 @@ source ~/code/setup-scripts/.env
 
 AUTH_HEADER="Authorization: Basic $(echo -n "$JIRA_USERNAME:$JIRA_PASSWORD" | base64)"
 CONTENT_TYPE="Content-Type: application/json"
+IN_PROGRESS_FILENAME=~/.config/jira
+
+get_jira () {
+  echo $(head -n 1 $IN_PROGRESS_FILENAME)
+}
+
+# REMINDER: 1 is falsey and 0 is truthy, because these are exit codes
+is_paused () {
+  nl=$(cat $IN_PROGRESS_FILENAME | wc -l | xargs)
+
+  if [ $(($nl % 2)) -eq 0 ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+stamp () {
+  if ! is_paused; then
+    date +%s >> $IN_PROGRESS_FILENAME
+  else
+    echo "-$(date +%s)" >> $IN_PROGRESS_FILENAME
+  fi
+}
 
 case $1 in
 
@@ -144,6 +168,45 @@ EOM
       -H "$CONTENT_TYPE" \
       --data "{\"jql\":\"$FILTER_TEXT\"}" \
       $JIRA_ENDPOINT/rest/api/latest/version/$JIRA_RELEASE_FILTER_ID
+    ;;
+
+  start)
+    echo $2 > $IN_PROGRESS_FILENAME
+    stamp
+    ;;
+
+  pause)
+    if ! is_paused; then
+      echo "Pausing $(get_jira)"
+      stamp
+    else
+      echo "$(get_jira) is not currently in progress"
+    fi
+    ;;
+
+  resume)
+    if is_paused; then
+      echo "Resuming $(get_jira)"
+      stamp
+    else
+      echo "$(get_jira) is not currently paused"
+    fi
+    ;;
+
+  done)
+    if ! is_paused; then
+      stamp
+    fi
+
+    sum=0
+
+    while read -r TS; do
+      sum=$(($sum+$TS))
+    done < <(cat $IN_PROGRESS_FILENAME | tail -n +2)
+    head -n 1 $IN_PROGRESS_FILENAME
+
+    # Uses some cool math to return a rounded integer instead of truncated
+    echo "$(( ($sum + 60 - 1 ) / 60 ))m"
     ;;
 
 esac
