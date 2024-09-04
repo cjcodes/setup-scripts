@@ -93,27 +93,6 @@ end try
 
 hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '4', function() hs.osascript.applescript(scroll_script) end)
 
-brew_init = 'eval "$(/opt/homebrew/bin/brew shellenv)" && '
-
-function bw_unlock()
-  tok = hs.settings.get("bw_session")
-  if tok ~= nil then
-    output, _, _, rc = hs.execute(brew_init .. "bw unlock --check --session " .. tok)
-    if rc == 0 then
-      return tok
-    end
-  end
-
-  _, password = hs.dialog.textPrompt("Master Password", "", "", "Login", "Cancel", true)
-  output, _, _, rc = hs.execute(brew_init .. "bw unlock --raw " .. password)
-  _, _, _, _ = hs.execute(brew_init .. "bw sync --session " .. output)
-  if rc == 0 then
-    hs.settings.set("bw_session", output)
-  end
-
-  return output
-end
-
 --------------------------
 -- Toggle GlobalProtect --
 --------------------------
@@ -206,3 +185,4 @@ function type_password()
 end
 
 hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '5', type_password)
+
