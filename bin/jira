@@ -29,6 +29,18 @@ stamp () {
   fi
 }
 
+print_progress () {
+  sum=0
+
+  while read -r TS; do
+    sum=$(($sum+$TS))
+  done < <(cat $IN_PROGRESS_FILENAME | tail -n +2)
+  head -n 1 $IN_PROGRESS_FILENAME
+
+  # Uses some cool math to return a rounded integer instead of truncated
+  echo "$(( ($sum + 60 - 1 ) / 60 ))m"
+}
+
 case $1 in
 
   #######################
@@ -51,7 +63,6 @@ case $1 in
         "summary": "$summary",
         "description": "$description",
         "issuetype": {"id": $JIRA_ISSUE_TYPE},
-        "${JIRA_EPIC_FIELD_ID}": "${JIRA_DEFAULT_EPIC}",
         "assignee": $assignee
       }
     }
@@ -97,16 +108,6 @@ EOM
     }
 EOM
 
-    DATA=`curl \
-      -s \
-      -X GET \
-      -H "$AUTH_HEADER" \
-      -H "$CONTENT_TYPE" \
-      $JIRA_ENDPOINT/rest/api/latest/version/47434`
-
-    echo $DATA
-    exit 0
-
     # Create the release
     RELEASE_ID=`curl \
       -s \
@@ -117,11 +118,9 @@ EOM
       $JIRA_ENDPOINT/rest/api/latest/version \
       | jq -r '.id'`
 
-    # THIS IS NOT WORKING YET, JIRA ISSUES
-    # Add issues to the release
     read -d '' json << EOM
     {
-      "jql": "project=$JIRA_PROJECT AND 'Epic Link' = $JIRA_DEFAULT_EPIC AND fixVersion IS NULL AND resolution IS NOT NULL",
+      "jql": "project=$JIRA_PROJECT AND fixVersion IS NULL AND resolution IS NOT NULL",
       "maxResults": 50,
       "fields": [
         "fixVersion"
@@ -148,8 +147,6 @@ EOM
         $JIRA_ENDPOINT/rest/api/latest/issue/$issue
     done
 
-    exit 0
-
     # Mark the release as released
     curl \
       -s \
@@ -157,7 +154,7 @@ EOM
       -H "$AUTH_HEADER" \
       -H "$CONTENT_TYPE" \
       --data "{\"released\":true}" \
-      $JIRA_ENDPOINT/rest/api/latest/version/$RELEASE_ID
+      $JIRA_ENDPOINT/rest/api/latest/version/$RELEASE_ID > /dev/null
 
     # Update the latest release filter
     FILTER_TEXT="fixVersion=$RELEASE_NAME"
@@ -167,7 +164,7 @@ EOM
       -H "$AUTH_HEADER" \
       -H "$CONTENT_TYPE" \
       --data "{\"jql\":\"$FILTER_TEXT\"}" \
-      $JIRA_ENDPOINT/rest/api/latest/version/$JIRA_RELEASE_FILTER_ID
+      $JIRA_ENDPOINT/rest/api/latest/filter/$JIRA_RELEASE_FILTER_ID > /dev/null
     ;;
 
   start)
@@ -197,16 +194,18 @@ EOM
     if ! is_paused; then
       stamp
     fi
-
-    sum=0
-
-    while read -r TS; do
-      sum=$(($sum+$TS))
-    done < <(cat $IN_PROGRESS_FILENAME | tail -n +2)
-    head -n 1 $IN_PROGRESS_FILENAME
-
-    # Uses some cool math to return a rounded integer instead of truncated
-    echo "$(( ($sum + 60 - 1 ) / 60 ))m"
+    print_progress
     ;;
 
+  status)
+    get_jira
+    ;;
+
+  restart)
+    if ! is_paused; then
+      stamp
+    fi
+    print_progress
+    echo "$(get_jira)" > $IN_PROGRESS_FILENAME
+    stamp
 esac

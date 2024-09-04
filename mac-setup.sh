@@ -18,6 +18,7 @@ PACKAGES=(
   pianobar
   tmux
   terraform
+  mysql-client
 )
 
 CASKS=(
