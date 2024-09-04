@@ -7,7 +7,6 @@ TAPS=(
 PACKAGES=(
   adr-tools
   asdf
-  firefox-profile-switcher-connector
   jq
   python3
   sqlite
@@ -15,27 +14,17 @@ PACKAGES=(
   watch
   wget
   gh
-  pianobar
-  tmux
   terraform
   mysql-client
 )
 
 CASKS=(
-  visual-studio-code
+  brave-browser
   hammerspoon
-  firefox
-  krisp
-  bitwarden
-  1password
-  1password-cli
-  signal
-  caffeine
-  pandora
-  monitorcontrol
-  tidal
-  todoist
   jetbrains-toolbox
+  monitorcontrol
+  spotify
+  visual-studio-code
 )
 
 VSCODE_EXT=(
