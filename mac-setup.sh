@@ -141,6 +141,8 @@ defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile -b
 defaults write com.googlecode.iterm2 "NoSyncNeverRemindPrefsChangesLostForFile_selection" 2
 defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
 defaults write com.googlecode.iterm2 SUSendProfileInfo -bool false
+defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste -bool true
+defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste_selection -bool false
 
 ##############################
 ### Hammerspoon automation ###
@@ -167,3 +169,11 @@ git config --global user.name "Chris Johnson"
 git config --global push.autoSetupRemote true
 git config --global core.excludesfile ~/.gitignore_global
 echo '.DS_Store' >> ~/.gitignore_global
+
+#################
+### wallpaper ###
+#################
+
+wget https://images.wallpaperscraft.com/image/single/bridge_aerial_view_river_130099_3840x2160.jpg
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$(pwd)/bridge_aerial_view_river_130099_3840x2160.jpg\""
+rm -f bridge_aerial_view_river_130099_3840x2160.jpg
