@@ -176,4 +176,4 @@ echo '.DS_Store' >> ~/.gitignore_global
 
 wget https://images.wallpaperscraft.com/image/single/bridge_aerial_view_river_130099_3840x2160.jpg
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$(pwd)/bridge_aerial_view_river_130099_3840x2160.jpg\""
-rm -f bridge_aerial_view_river_130099_3840x2160.jpg
+# rm -f bridge_aerial_view_river_130099_3840x2160.jpg
