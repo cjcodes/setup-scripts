@@ -1,9 +1,7 @@
-local log = hs.logger.new('cjcodes', 'debug')
-
 -----------------------
 -- WINDOW MANAGEMENT --
 -----------------------
-DEMO_WIDTH = 1700
+DEMO_WIDTH = 1920
 DEMO_HEIGHT = 1080
 units = {
   left3     = { x = 0, y = 0, w = 1 / 3, h = 1.00 },
@@ -93,28 +91,6 @@ end try
 
 hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '4', function() hs.osascript.applescript(scroll_script) end)
 
---------------------------
--- Toggle GlobalProtect --
---------------------------
-
-toggle_gp = [[
-  tell application "System Events" to tell process "GlobalProtect"
-	  click menu bar item 1 of menu bar 2
-	  # UI elements # Lists out UI elements in the Script Editor
-	  click button 2 of window 1
-	  click menu bar item 1 of menu bar 2
-    repeat 10 times
-      delay 1
-      if exists (window 1) then
-        click menu bar item 1 of menu bar 2
-      end if
-    end repeat
-  end tell
-end
-]]
-
-hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '3', function() hs.osascript.applescript(toggle_gp) end)
-
 ----------------------------
 -- Screen Saver Preventer --
 ----------------------------
@@ -137,52 +113,16 @@ if caffeine then
   setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
-
----------------------------
--- Remote Access Tablet --
----------------------------
-
-local t1, t2
-tablet = hs.menubar.new()
-
-function logOut(exitCode, stdOut, stdErr)
-  if stdErr ~= nil then
-    log:e(stdErr)
-  end
-
-  log:i(stdOut)
-end
-
-function toggleTablet()
-  if t1 ~= nil and t1:isRunning() then
-    hs.task.new("/opt/homebrew/bin/adb", logOut, { "shell", "input", "keyevent", "KEYCODE_WAKEUP" })
-    hs.application.applicationForPID(t1:pid()):activate()
-    return
-  end
-
-  t1 = hs.task.new("/opt/homebrew/bin/scrcpy", logOut, { "--tcpip=10.0.1.9" })
-  t2 = hs.task.new("/opt/homebrew/bin/adb", logOut, { "shell", "input", "keyevent", "KEYCODE_WAKEUP" })
-
-  t1:setEnvironment({ ADB = '/opt/homebrew/bin/adb' })
-
-  t1:start()
-  t2:start()
-end
-
-tablet:setClickCallback(toggleTablet)
-tablet:setTitle("💻")
-
 ---------------------------
 -- Quick password typing --
 ---------------------------
 
 function type_password()
-  local f = io.open("password", "r")
+  local f = io.open("password", "r") -- this is in the ~/.hammerspoon directory, maybe move this if I bring this command back
   local t = f:read("*line")
   hs.eventtap.keyStrokes("cjohnson")
   hs.eventtap.keyStroke({}, "tab")
   hs.eventtap.keyStrokes(t)
 end
 
-hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '5', type_password)
-
+-- hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '5', type_password)

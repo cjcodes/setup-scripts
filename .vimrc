@@ -21,4 +21,3 @@ set laststatus=2
 set nobackup
 set nowritebackup
 set noswapfile
-

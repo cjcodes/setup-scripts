@@ -1,8 +1,6 @@
 #!/bin/bash
 
-TAPS=(
-  null-dev/firefox-profile-switcher
-)
+TAPS=()
 
 PACKAGES=(
   adr-tools
@@ -21,10 +19,10 @@ PACKAGES=(
 CASKS=(
   brave-browser
   hammerspoon
-  jetbrains-toolbox
   monitorcontrol
   spotify
   visual-studio-code
+  iterm2
 )
 
 VSCODE_EXT=(
@@ -32,6 +30,19 @@ VSCODE_EXT=(
   Orta.vscode-jest
   ms-vscode.makefile-tools
   EditorConfig.EditorConfig
+  ms-python.black-formatter
+  dbaeumer.vscode-eslint
+  eamodio.gitlens
+  virgilsisoe.hammerspoon
+  ms-toolsai.jupyter
+  ms-toolsai.jupyter-renderers
+  sumneko.lua
+  bierner.markdown-mermaid
+  davidanson.vscode-markdownlint
+  huytd.nord-light
+  esbenp.prettier-vscode
+  ms-python.python
+  ms-python.debugpy
 )
 
 xcode-select --install
@@ -81,7 +92,10 @@ echo "if [[ -n \$(git -C $(pwd) status -s) ]]; then echo \"\\e[31mYou have unsta
 ### VS Code Settings ###
 ########################
 
+CODE_SETTINGS="$HOME/Library/Application Support/Code/User/settings.json"
 code --install-extension ${VSCODE_EXT[@]}
+rm -f $CODE_SETTINGS
+ln -s $(pwd)/vscode-settings.json $CODE_SETTINGS
 
 #################
 ### oh-my-zsh ###
@@ -89,6 +103,7 @@ code --install-extension ${VSCODE_EXT[@]}
 
 if [ ! -d ~/.oh-my-zsh ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sed -i.bak 's/\(plugins=\).*$/\1(git asdf)/' ~/.zshrc
 fi
 
 ############
@@ -96,7 +111,7 @@ fi
 ############
 
 if ! grep -q asdf ~/.zprofile; then
-  echo '. /opt/homebrew/opt/asdf/libexec/asdf.sh' >> ~/.zprofile
+  echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zprofile
 fi
 
 ############################
@@ -116,6 +131,17 @@ if ! defaults read com.apple.terminal | grep -q Nord; then
   rm Nord-cj.terminal
 fi
 
+############################
+#### iterm2 preferences ####
+############################
+
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+defaults write com.googlecode.iterm2 PrefsCustomFolder ~/code/setup-scripts/iterm2-settings
+defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile -bool true
+defaults write com.googlecode.iterm2 "NoSyncNeverRemindPrefsChangesLostForFile_selection" 2
+defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
+defaults write com.googlecode.iterm2 SUSendProfileInfo -bool false
+
 ##############################
 ### Hammerspoon automation ###
 ##############################
@@ -130,6 +156,14 @@ fi
 #################
 
 if [ ! -f ~/.vimrc ]; then
-  ln -s $(pwd)/vimrc.lua ~/.vimrc
+  ln -s $(pwd)/.vimrc ~/.vimrc
 fi
 
+#################
+### git setup ###
+#################
+
+git config --global user.name "Chris Johnson"
+git config --global push.autoSetupRemote true
+git config --global core.excludesfile ~/.gitignore_global
+echo '.DS_Store' >> ~/.gitignore_global

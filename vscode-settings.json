@@ -1,0 +1,48 @@
+{
+  "editor.minimap.enabled": false,
+  "workbench.startupEditor": "none",
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "editor.tabSize": 2,
+  "explorer.confirmDelete": false,
+  "git.autofetch": true,
+  "breadcrumbs.enabled": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "git.confirmSync": false,
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true,
+    "**/.ammonite": true
+  },
+  "window.commandCenter": false,
+  "workbench.statusBar.visible": false,
+  "workbench.activityBar.location": "hidden",
+  "nxConsole.showNodeVersionOnStartup": false,
+  "extensions.ignoreRecommendations": true,
+  "workbench.colorTheme": "Nord Light",
+  "workbench.preferredDarkColorTheme": "Nord",
+  "workbench.preferredLightColorTheme": "Nord Light",
+  "window.autoDetectColorScheme": true,
+  "update.showReleaseNotes": false,
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "debug.javascript.defaultRuntimeExecutable": {
+    "pwa-node": "node"
+  },
+  "makefile.configureOnOpen": false,
+  "svelte.enable-ts-plugin": true
+}
