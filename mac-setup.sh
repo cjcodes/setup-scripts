@@ -20,7 +20,7 @@ CASKS=(
   brave-browser
   hammerspoon
   monitorcontrol
-  spotify
+  deezer
   visual-studio-code
   iterm2
 )
@@ -143,6 +143,7 @@ defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
 defaults write com.googlecode.iterm2 SUSendProfileInfo -bool false
 defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste -bool true
 defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste_selection -bool false
+defaults write com.googlecode.iterm2 NoSyncPermissionToShowTip -bool false
 
 ##############################
 ### Hammerspoon automation ###
