@@ -45,6 +45,12 @@ VSCODE_EXT=(
   ms-python.debugpy
 )
 
+###############
+### Prereqs ###
+###############
+
+read -p "Git email: " email
+
 xcode-select --install
 
 ################
@@ -124,10 +130,11 @@ if ! defaults read com.apple.terminal | grep -q Nord; then
   head -n $(($END_OF_DICT-1)) Nord.terminal >> Nord-cj.terminal
   cat terminal-prefs.txt >> Nord-cj.terminal
   tail -n +$END_OF_DICT Nord.terminal >> Nord-cj.terminal
+  rm Nord.terminal
+  mv Nord-cj.terminal Nord.terminal
   open Nord.terminal
   defaults write com.apple.terminal "Default Window Settings" -string "Nord"
   defaults write com.apple.terminal "Startup Window Settings" -string "Nord"
-  rm Nord.terminal
   rm Nord-cj.terminal
 fi
 
@@ -167,6 +174,7 @@ fi
 #################
 
 git config --global user.name "Chris Johnson"
+git config --global user.email "$email"
 git config --global push.autoSetupRemote true
 git config --global core.excludesfile ~/.gitignore_global
 echo '.DS_Store' >> ~/.gitignore_global
@@ -178,3 +186,4 @@ echo '.DS_Store' >> ~/.gitignore_global
 wget https://images.wallpaperscraft.com/image/single/bridge_aerial_view_river_130099_3840x2160.jpg
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$(pwd)/bridge_aerial_view_river_130099_3840x2160.jpg\""
 # rm -f bridge_aerial_view_river_130099_3840x2160.jpg
+
