@@ -23,6 +23,7 @@ CASKS=(
   deezer
   visual-studio-code
   iterm2
+  obsidian
 )
 
 VSCODE_EXT=(
