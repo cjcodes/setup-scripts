@@ -9,6 +9,12 @@ return {
   'nvim-telescope/telescope.nvim',
   'nvim-tree/nvim-web-devicons',
   {
+    'akinsho/bufferline.nvim',
+    opts = {
+      style_preset = require('bufferline').style_preset.no_italic,
+    },
+  },
+  {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
@@ -49,8 +55,10 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-      require("nvim-tree").setup()
-    end,
+    opts = {
+      view = {
+        width = 60,
+      },
+    },
   },
 }

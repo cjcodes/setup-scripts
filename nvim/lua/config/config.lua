@@ -11,6 +11,7 @@ local opts = {
   clipboard = 'unnamedplus',
   mouse = 'a',
   cursorline = true,
+  termguicolors = true,
 
   backup = false,
   swapfile = false,
@@ -30,3 +31,6 @@ for k, v in pairs(opts) do
 end
 
 vim.cmd('colorscheme catppuccin')
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = require('nvim-tree.api').tree.open })
+vim.api.nvim_create_autocmd({ "BufReadPre" }, { callback = require('nvim-tree.api').tree.find_file })
