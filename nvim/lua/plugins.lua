@@ -9,15 +9,17 @@ return {
   'nvim-tree/nvim-web-devicons',
   {
     'nvim-telescope/telescope.nvim',
-    opts = {
-      defaults = {
-        mappings = {
-          n = {
-            ['<bs>'] = require('telescope.actions').delete_buffer
+    config = function()
+      require('telescope').setup({
+        defaults = {
+          mappings = {
+            n = {
+              ['<bs>'] = require('telescope.actions').delete_buffer
+            },
           },
         },
-      },
-    },
+      })
+    end,
   },
   {
     'catppuccin/nvim',
