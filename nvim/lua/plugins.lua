@@ -6,12 +6,17 @@ return {
   'mason-org/mason.nvim',
   'mason-org/mason-lspconfig.nvim',
   'neovim/nvim-lspconfig',
-  'nvim-telescope/telescope.nvim',
   'nvim-tree/nvim-web-devicons',
   {
-    'akinsho/bufferline.nvim',
+    'nvim-telescope/telescope.nvim',
     opts = {
-      style_preset = require('bufferline').style_preset.no_italic,
+      defaults = {
+        mappings = {
+          n = {
+            ['<bs>'] = require('telescope.actions').delete_buffer
+          },
+        },
+      },
     },
   },
   {
