@@ -14,6 +14,9 @@ PACKAGES=(
   gh
   terraform
   mysql-client
+  fd
+  rg
+  neovim
 )
 
 CASKS=(
@@ -24,6 +27,7 @@ CASKS=(
   visual-studio-code
   iterm2
   obsidian
+  font-fira-code-nerd-font
 )
 
 VSCODE_EXT=(
@@ -168,6 +172,10 @@ fi
 
 if [ ! -f ~/.vimrc ]; then
   ln -s $(pwd)/.vimrc ~/.vimrc
+fi
+
+if [ ! -d ~/.config/nvim ]; then
+  ln -s $(pwd)/nvim ~/.config/nvim
 fi
 
 #################
