@@ -28,6 +28,7 @@ CASKS=(
   iterm2
   monitorcontrol
   obsidian
+  ollama
   visual-studio-code
 )
 
