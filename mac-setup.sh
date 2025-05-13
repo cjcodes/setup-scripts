@@ -196,3 +196,15 @@ wget https://images.wallpaperscraft.com/image/single/bridge_aerial_view_river_13
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$(pwd)/bridge_aerial_view_river_130099_3840x2160.jpg\""
 # rm -f bridge_aerial_view_river_130099_3840x2160.jpg
 
+##########################
+### Browser Extensions ###
+##########################
+
+echo "
+The following browser extensions are ready for install once you set your default browser to Brave:
+
+https://chromewebstore.google.com/detail/meetings-page-auto-closer/pbgidoglkjhfgjhalbbiiahdlokjcplb
+https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
+https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
+https://chromewebstore.google.com/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
+"
