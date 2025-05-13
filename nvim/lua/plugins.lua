@@ -2,11 +2,21 @@ return {
   'numToStr/Comment.nvim',
   'nmac427/guess-indent.nvim',
   'nvim-treesitter/nvim-treesitter',
-  'saghen/blink.cmp',
   'mason-org/mason.nvim',
   'mason-org/mason-lspconfig.nvim',
   'neovim/nvim-lspconfig',
   'nvim-tree/nvim-web-devicons',
+  {
+    'saghen/blink.cmp',
+    version = '1.*',
+    opts = {
+      completion = {
+        menu = {
+          auto_show = true,
+        },
+      },
+    },
+  },
   {
     'nvim-telescope/telescope.nvim',
     config = function()
