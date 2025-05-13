@@ -6,5 +6,17 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- nvim-tree
-local nvt = require('nvim-tree.api')
-vim.keymap.set('n', '<leader>e', nvt.tree.toggle, { desc = 'Toggle nvim-tree' })
+local nvimTreeFocusOrToggle = function ()
+	local nvimTree = require("nvim-tree.api")
+	local currentBuf = vim.api.nvim_get_current_buf()
+	local currentBufFt = vim.api.nvim_get_option_value("filetype", {
+    buf = currentBuf
+  })
+	if currentBufFt == "NvimTree" then
+		nvimTree.tree.toggle()
+	else
+		nvimTree.tree.focus()
+	end
+end
+
+vim.keymap.set('n', '<leader>e', nvimTreeFocusOrToggle, { desc = 'Toggle nvim-tree' })

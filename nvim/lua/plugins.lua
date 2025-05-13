@@ -4,19 +4,16 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    config = function () 
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-        auto_install = true,
-        highlight = {
-          enable = true,
-        },
-        indent = {
-          enable = true,
-        },
-      })
-    end
+    main = 'nvim-treesitter.configs',
+    opts = {
+      auto_install = true,
+      highlight = {
+        enable = true,
+      },
+      indent = {
+        enable = true,
+      },
+    },
   },
   {
     'mason-org/mason.nvim',
@@ -43,8 +40,8 @@ return {
       require('telescope').setup({
         defaults = {
           mappings = {
-            n = {
-              ['<bs>'] = require('telescope.actions').delete_buffer
+            i = {
+              ['<c-d>'] = require('telescope.actions').delete_buffer
             },
           },
         },
