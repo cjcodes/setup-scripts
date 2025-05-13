@@ -5,49 +5,50 @@ TAPS=()
 PACKAGES=(
   adr-tools
   asdf
+  fd
+  gh
   jq
-  python3
+  make
+  mysql-client
+  neovim
+  nmap
+  ripgrep
   sqlite
   telnet
+  terraform
   watch
   wget
-  gh
-  terraform
-  mysql-client
-  fd
-  rg
-  neovim
 )
 
 CASKS=(
   brave-browser
-  hammerspoon
-  monitorcontrol
   deezer
-  visual-studio-code
-  iterm2
-  obsidian
   font-fira-code-nerd-font
+  hammerspoon
+  iterm2
+  monitorcontrol
+  obsidian
+  visual-studio-code
 )
 
 VSCODE_EXT=(
-  arcticicestudio.nord-visual-studio-code
-  Orta.vscode-jest
-  ms-vscode.makefile-tools
   EditorConfig.EditorConfig
-  ms-python.black-formatter
-  dbaeumer.vscode-eslint
-  eamodio.gitlens
-  virgilsisoe.hammerspoon
-  ms-toolsai.jupyter
-  ms-toolsai.jupyter-renderers
-  sumneko.lua
+  Orta.vscode-jest
+  arcticicestudio.nord-visual-studio-code
   bierner.markdown-mermaid
   davidanson.vscode-markdownlint
-  huytd.nord-light
+  dbaeumer.vscode-eslint
+  eamodio.gitlens
   esbenp.prettier-vscode
-  ms-python.python
+  huytd.nord-light
+  ms-python.black-formatter
   ms-python.debugpy
+  ms-python.python
+  ms-toolsai.jupyter
+  ms-toolsai.jupyter-renderers
+  ms-vscode.makefile-tools
+  sumneko.lua
+  virgilsisoe.hammerspoon
 )
 
 ###############
