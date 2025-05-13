@@ -1,8 +1,28 @@
 return {
   'numToStr/Comment.nvim',
   'nmac427/guess-indent.nvim',
-  'nvim-treesitter/nvim-treesitter',
-  'mason-org/mason.nvim',
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function () 
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+        auto_install = true,
+        highlight = {
+          enable = true,
+        },
+        indent = {
+          enable = true,
+        },
+      })
+    end
+  },
+  {
+    'mason-org/mason.nvim',
+    lazy = false,
+    opts = {},
+  },
   'mason-org/mason-lspconfig.nvim',
   'neovim/nvim-lspconfig',
   'nvim-tree/nvim-web-devicons',
