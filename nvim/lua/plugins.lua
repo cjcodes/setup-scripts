@@ -32,6 +32,9 @@ return {
           auto_show = true,
         },
       },
+      keymap = {
+        ['<Tab>'] = { 'select_and_accept' },
+      },
     },
   },
   {
