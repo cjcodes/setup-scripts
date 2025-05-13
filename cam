@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#CMD="/Users/cjohnson/.asdf/shims/uvcc"
+CMD="uvcc"
+
+val=$($CMD get absolute_exposure_time)
+#$CMD set auto_exposure_mode 1
+
+if [[ "$val" == "5" ]]; then
+  v=10
+elif [[ "$val" == "10" ]]; then
+  if [[ "$1" == "up" ]]; then
+    v=20
+  else
+    v=5
+  fi
+elif [[ "$val" == "20" ]]; then
+  if [[ "$1" == "up" ]]; then
+    v=39
+  else
+    v=10
+  fi
+elif [[ "$val" == "39" ]]; then
+  if [[ "$1" == "up" ]]; then
+    v=78
+  else
+    v=20
+  fi
+elif [[ "$val" == "78" ]]; then
+  if [[ "$1" == "up" ]]; then
+    v=20
+  else
+    v=39
+  fi
+else
+  v=20
+fi
+
+echo "Current value: $val"
+echo "Setting to: $v"
+
+$CMD set absolute_exposure_time $v
+
