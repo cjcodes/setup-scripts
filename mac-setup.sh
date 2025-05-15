@@ -180,6 +180,14 @@ if [ ! -d ~/.config/nvim ]; then
   ln -s $(pwd)/nvim ~/.config/nvim
 fi
 
+###################################
+### Remove annoying keybindings ###
+###################################
+# Disable input source switcher (Cmd+Space and Ctrl+Space)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "<dict><key>enabled</key><false/></dict>"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 61 "<dict><key>enabled</key><false/></dict>"
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
 #################
 ### git setup ###
 #################
