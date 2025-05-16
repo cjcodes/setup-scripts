@@ -21,10 +21,6 @@ return {
           score_offset = 100,
           async = true,
         },
-        lsp = {
-          module = "blink.cmp.sources.lsp",
-          score_offset = 200,
-        },
       },
     },
     completion = {
