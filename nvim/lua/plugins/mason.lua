@@ -5,6 +5,7 @@ return {
   'mason-org/mason.nvim',
   lazy = false,
   dependencies = {
+    'neovim/nvim-lspconfig',
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
@@ -27,6 +28,15 @@ return {
     },
   },
   config = function(_, opts)
+    require('lspconfig')['lua_ls'].setup({
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" },
+          },
+        },
+      },
+    })
     require('mason').setup(opts.mason)
     require('mason-lspconfig').setup(opts.lspconfig)
     require('mason-tool-installer').setup(opts.tools)

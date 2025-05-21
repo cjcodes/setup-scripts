@@ -19,9 +19,10 @@ return {
       'nvim-lua/plenary.nvim',
     },
     build = 'make tiktoken',
-    opts = {
-
-    },
-    config = true,
+    opts = {},
+    config = function(_, _)
+      require('CopilotChat').setup()
+      vim.keymap.set('n', '<leader>g', ':CopilotChatToggle<CR>', { desc = 'CopilotChat' })
+    end
   },
 }
