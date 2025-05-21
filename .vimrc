@@ -21,3 +21,5 @@ set laststatus=2
 set nobackup
 set nowritebackup
 set noswapfile
+
+set clipboard^=unnamed,unnamedplus
