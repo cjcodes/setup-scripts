@@ -28,7 +28,7 @@ return {
   },
   config = function(_, opts)
     local lazy_status = require('lazy.status')
-    local p = require("catppuccin.palettes").get_palette()
+    local p = require('catppuccin.palettes').get_palette()
 
     require('lualine').setup(vim.tbl_deep_extend('force', opts, {
       sections = {
@@ -38,6 +38,7 @@ return {
             cond = lazy_status.has_updates,
             color = {
               bg = p.peach,
+              fg = p.base,
             },
           },
         },

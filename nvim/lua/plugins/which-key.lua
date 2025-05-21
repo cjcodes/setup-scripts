@@ -2,7 +2,8 @@ return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
   opts = {
-    delay = 800,
+    delay = 600,
+    preset = "helix",
   },
   keys = {
     {
@@ -13,4 +14,14 @@ return {
       desc = 'Buffer Local Keymaps (which-key)',
     },
   },
+  config = function(_, opts)
+    local w = require('which-key')
+    w.add({
+      { '<leader>x', group = 'trouble' },
+      { '<leader>d', group = 'diagnostics' },
+      { '<leader>f', group = 'telescope' },
+      { '<leader>e', group = 'tree' },
+    })
+    w.setup(opts)
+  end
 }
