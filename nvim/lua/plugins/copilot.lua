@@ -22,7 +22,8 @@ return {
     config = true,
     lazy = true,
     keys = {
-      { '<leader>g', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat' },
+      { '<leader>gg', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat' },
+      { '<leader>gc', '<cmd>CopilotChatCommit<cr>', desc = 'CopilotChat Create commit message' },
     },
   },
 }

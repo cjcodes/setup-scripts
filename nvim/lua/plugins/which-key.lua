@@ -21,6 +21,7 @@ return {
       { '<leader>d', group = 'diagnostics' },
       { '<leader>f', group = 'telescope' },
       { '<leader>e', group = 'tree' },
+      { '<leader>g', group = 'CopilotChat' },
     })
     w.setup(opts)
   end
