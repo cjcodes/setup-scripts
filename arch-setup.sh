@@ -11,6 +11,7 @@ PACKAGES=(
   fd
   ripgrep
   neovim
+  xclip
 )
 
 sudo pacman -S ${PACKAGES[@]}
