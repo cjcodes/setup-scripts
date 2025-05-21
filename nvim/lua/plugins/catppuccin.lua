@@ -8,6 +8,7 @@ return {
       treesitter = true,
       notify = true,
       mason = true,
+      noice = true,
       telescope = {
         enabled = true
       },

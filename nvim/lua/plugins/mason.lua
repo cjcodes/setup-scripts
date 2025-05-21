@@ -9,8 +9,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
-  opts = {
-    mason = {
+  opts = { mason = {
       ui = {
         icons = {
           package_installed = "✓",
@@ -40,5 +39,23 @@ return {
     require('mason').setup(opts.mason)
     require('mason-lspconfig').setup(opts.lspconfig)
     require('mason-tool-installer').setup(opts.tools)
+
+    vim.diagnostic.config({
+      virtual_lines = false,
+      virtual_text = true,
+    })
+
+    vim.keymap.set('n', '<leader>dl', function()
+      local lines = vim.diagnostic.config().virtual_lines
+
+      vim.diagnostic.config({
+        virtual_lines = not lines,
+        virtual_text = lines,
+      })
+    end, { desc = "Toggle diagnostic virtual_lines" })
+
+    vim.keymap.set('n', '<leader>dt', function()
+      vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+    end, { desc = "Toggle diagnostic virtual_text" })
   end
 }

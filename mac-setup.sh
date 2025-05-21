@@ -197,6 +197,7 @@ git config --global user.email "$email"
 git config --global push.autoSetupRemote true
 git config --global core.excludesfile ~/.gitignore_global
 echo '.DS_Store' >> ~/.gitignore_global
+echo '.phpactor.json' >> ~/.gitignore_global
 
 #################
 ### wallpaper ###
