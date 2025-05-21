@@ -9,7 +9,8 @@ return {
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
-  opts = { mason = {
+  opts = {
+    mason = {
       ui = {
         icons = {
           package_installed = "✓",
@@ -24,6 +25,7 @@ return {
     },
     tools = {
       ensure_installed = tools,
+      lazy = true,
     },
   },
   config = function(_, opts)

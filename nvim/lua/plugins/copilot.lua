@@ -4,7 +4,7 @@ return {
   {
     'zbirenbaum/copilot.lua',
     enabled = opts.llm == 'copilot',
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "InsertEnter" },
     opts = {
       suggestion = {
         -- enabled = false,
@@ -19,10 +19,10 @@ return {
       'nvim-lua/plenary.nvim',
     },
     build = 'make tiktoken',
-    opts = {},
-    config = function(_, _)
-      require('CopilotChat').setup()
-      vim.keymap.set('n', '<leader>g', ':CopilotChatToggle<CR>', { desc = 'CopilotChat' })
-    end
+    config = true,
+    lazy = true,
+    keys = {
+      { '<leader>g', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat' },
+    },
   },
 }

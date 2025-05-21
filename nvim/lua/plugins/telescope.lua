@@ -3,34 +3,26 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
+  lazy = true,
   opts = {
-    -- path_display = { 'smart' },
-  },
-  config = function(_, opts)
-    local defaults = {
-      defaults = {
-        file_ignore_patterns = {
-          'node_modules',
-          '.git',
-        },
-        mappings = {
-          i = {
-            ['<c-d>'] = require('telescope.actions').delete_buffer
-          },
+    defaults = {
+      file_ignore_patterns = {
+        'node_modules',
+        '.git',
+      },
+      mappings = {
+        i = {
+          -- ['<c-d>'] = require('telescope.actions').delete_buffer
         },
       },
-    }
-
-    for k,v in pairs(opts) do defaults.defaults[k] = v end
-    require('telescope').setup(defaults)
-
-    local builtin = require('telescope.builtin')
-
-    vim.keymap.set('n', '<leader>ff', function () builtin.find_files({hidden=true}) end, { desc = 'Telescope find files' })
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-    vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files' })
-    vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Telescope todos" })
-  end,
+    },
+  },
+  keys = {
+    { '<leader>ff', '<cmd>Telescope find_files hidden=true<cr>', desc = 'Telescope find files' },
+    { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = 'Telescope live grep' },
+    { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'Telescope buffers' },
+    { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Telescope help tags' },
+    { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Telescope recent files' },
+    { '<leader>ft', '<cmd>TodoTelescope<cr>', desc = "Telescope todos" },
+  },
 }
