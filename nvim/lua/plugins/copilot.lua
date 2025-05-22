@@ -1,5 +1,33 @@
 local opts = require('opts')
 
+local function copy_commit_message()
+  local chat = require('CopilotChat').chat
+
+  if chat:get_closest_section().answer then
+    local t = vim.loop.new_timer()
+    t:start(500, 0, vim.schedule_wrap(copy_commit_message))
+  else
+    local answer = chat:get_closest_section('answer').content
+    -- remove the first and last line of answer and assign it to a variable called turtle
+    local msg = ''
+    for line in answer:gmatch('([^\n]*)\n?') do
+      if not line:match('^```') then
+        msg = msg .. line .. '\n'
+      end
+    end
+    vim.fn.setreg('*', msg)
+    vim.notify('Copied commit message to clipboard')
+  end
+end
+
+local function create_commit_message()
+  local chat = require('CopilotChat')
+  local commitPrompt = chat.config.prompts.Commit
+  chat.open()
+  chat.ask(commitPrompt.prompt, commitPrompt)
+  copy_commit_message()
+end
+
 return {
   {
     'zbirenbaum/copilot.lua',
@@ -23,7 +51,7 @@ return {
     lazy = true,
     keys = {
       { '<leader>gg', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat' },
-      { '<leader>gc', '<cmd>CopilotChatCommit<cr>', desc = 'CopilotChat Create commit message' },
+      { '<leader>gc', create_commit_message, desc = 'CopilotChat Create commit message' },
     },
   },
 }
