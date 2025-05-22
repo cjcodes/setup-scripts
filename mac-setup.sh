@@ -180,6 +180,8 @@ if [ ! -d ~/.config/nvim ]; then
   ln -s $(pwd)/nvim ~/.config/nvim
 fi
 
+echo 'alias e="nvim"' >> ~/.zshrc
+
 ###################################
 ### Remove annoying keybindings ###
 ###################################
