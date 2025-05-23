@@ -12,7 +12,7 @@ return {
       },
       mappings = {
         i = {
-          ['<c-d>'] = require('telescope.actions').delete_buffer,
+          ['<c-d>'] = function(buf) require('telescope.actions').delete_buffer(buf) end, -- Needs to be a function, else installation fails because telescope not installed yet
         },
       },
     },
