@@ -180,7 +180,14 @@ if [ ! -d ~/.config/nvim ]; then
   ln -s $(pwd)/nvim ~/.config/nvim
 fi
 
-echo 'alias e="nvim"' >> ~/.zshrc
+echo '
+function e() {
+  if [ -f "venv/bin/activate" ]; then
+    source venv/bin/activate
+  fi
+  nvim && clear
+}
+' >> ~/.zshrc
 
 ###################################
 ### Remove annoying keybindings ###
