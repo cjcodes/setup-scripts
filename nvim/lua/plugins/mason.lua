@@ -33,7 +33,10 @@ return {
       settings = {
         Lua = {
           diagnostics = {
-            globals = { "vim" },
+            globals = {
+              'vim', -- for nvim configs
+              'hs', -- for hammerspoon
+            },
           },
         },
       },
