@@ -1,3 +1,9 @@
+local keymap = {
+  ['<c-d>'] = function(buf)
+    require('telescope.actions').delete_buffer(buf)
+  end
+}
+
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
@@ -11,9 +17,8 @@ return {
         '.git',
       },
       mappings = {
-        i = {
-          ['<c-d>'] = function(buf) require('telescope.actions').delete_buffer(buf) end, -- Needs to be a function, else installation fails because telescope not installed yet
-        },
+        i = keymap,
+        n = keymap,
       },
     },
   },
