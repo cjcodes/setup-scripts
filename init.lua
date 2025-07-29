@@ -17,6 +17,7 @@ units = {
   righthalf = { x = 1 / 2, y = 0, w = 1 / 2, h = 1 },
   zoom      = { x = 1 / 6, y = 0, w = 1 / 3, h = 1 },
   demo      = { w = DEMO_WIDTH, h = DEMO_HEIGHT },
+  centre    = { w = 2800, h = 1600 },
 }
 
 -- ⇧ ⌥ ⌃ ⌘
@@ -35,11 +36,18 @@ hs.hotkey.bind(mod, 'w', function() hs.window.focusedWindow():move(units.rightha
 hs.hotkey.bind(mod, 'z', function() hs.window.focusedWindow():move(units.zoom, nil, true) end)
 hs.hotkey.bind(extraMod, 'right', function() hs.window.focusedWindow():move(units.rightbot6, nil, true) end)
 hs.hotkey.bind(extraMod, 'm', function() hs.window.focusedWindow():move(units.full, nil, true) end)
+hs.hotkey.bind(extraMod, 'c',
+  function()
+    hs.window.focusedWindow():setSize(units.centre)
+    hs.window.focusedWindow():centerOnScreen()
+  end
+)
 hs.hotkey.bind(extraMod, 'd',
   function()
     hs.window.focusedWindow():setSize(units.demo)
     hs.window.focusedWindow():centerOnScreen()
-  end)
+  end
+)
 
 ----------------------
 -- Typing shortcuts --
@@ -65,6 +73,8 @@ end):choices({
   { text = 'thumbsup', subText = '+:+1:' },
   { text = 'thanks', subText = '+:thank_you:' },
   { text = 'plusone', subText = '+:plusone:' },
+  { text = 'tm', subText = '™' },
+  { text = 'copy', subText = '©' },
 }):width(10):rows(5)
 
 hs.hotkey.bind({ '⌘', '⌃' }, '`', function() p:show() end)
@@ -113,6 +123,40 @@ if caffeine then
   setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
+
+-------------------------
+-- Remote Access Phone --
+--------------------------
+
+local t1, t2
+tablet = hs.menubar.new()
+
+function logOut(exitCode, stdOut, stdErr)
+  if stdErr ~= nil then
+    log:e(stdErr)
+  end
+
+  log:i(stdOut)
+end
+
+function toggleScrCpy()
+  if t1 ~= nil and t1:isRunning() then
+    hs.task.new("/opt/homebrew/bin/adb", logOut, { "shell", "input", "keyevent", "KEYCODE_WAKEUP" })
+    hs.application.applicationForPID(t1:pid()):activate()
+    return
+  end
+
+  t1 = hs.task.new("/opt/homebrew/bin/scrcpy", logOut, { "--kill-adb-on-close", "-S", "--window-height=1320" })
+  t2 = hs.task.new("/opt/homebrew/bin/adb", logOut, { "shell", "input", "keyevent", "KEYCODE_WAKEUP" })
+
+  t1:setEnvironment({ ADB = '/opt/homebrew/bin/adb' })
+
+  t1:start()
+  t2:start()
+end
+
+tablet:setClickCallback(toggleScrCpy)
+tablet:setTitle("📱")
 ---------------------------
 -- Quick password typing --
 ---------------------------
