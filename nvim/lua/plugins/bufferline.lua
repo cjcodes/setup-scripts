@@ -7,6 +7,6 @@ return {
   opts = {
     options = {
       mode = 'tabs',
-    }
+    },
   },
 }

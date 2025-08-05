@@ -1,7 +1,7 @@
 local keymap = {
   ['<c-d>'] = function(buf)
     require('telescope.actions').delete_buffer(buf)
-  end
+  end,
 }
 
 return {
@@ -28,8 +28,9 @@ return {
     { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = 'Telescope live grep' },
     { '<leader>fs', '<cmd>Telescope git_status<cr>', desc = 'Telescope git status' },
     { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'Telescope buffers' },
-    { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Telescope help tags' },
-    { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Telescope recent files' },
-    { '<leader>ft', '<cmd>TodoTelescope<cr>', desc = "Telescope todos" },
+    -- { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Telescope help tags" },
+    { '<leader>fh', '<cmd>Telescope oldfiles<cr>', desc = 'Telescope recent files' },
+    { '<leader>fr', '<cmd>Telescope lsp_references<cr>', desc = 'Telescope lsp references' },
+    { '<leader>ft', '<cmd>TodoTelescope<cr>', desc = 'Telescope todos' },
   },
 }

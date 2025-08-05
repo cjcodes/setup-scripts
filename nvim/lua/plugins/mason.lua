@@ -13,9 +13,9 @@ return {
     mason = {
       ui = {
         icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
+          package_installed = '✓',
+          package_pending = '➜',
+          package_uninstalled = '✗',
         },
       },
     },
@@ -57,10 +57,17 @@ return {
         virtual_lines = not lines,
         virtual_text = lines,
       })
-    end, { desc = "Toggle diagnostic virtual_lines" })
+    end, { desc = 'Toggle diagnostic virtual_lines' })
 
     vim.keymap.set('n', '<leader>dt', function()
       vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-    end, { desc = "Toggle diagnostic virtual_text" })
-  end
+    end, { desc = 'Toggle diagnostic virtual_text' })
+
+    vim.keymap.set('n', '<leader>dd', function()
+      vim.diagnostic.config({
+        virtual_text = false,
+        virtual_lines = false,
+      })
+    end, { desc = 'Turn off diagnostic text' })
+  end,
 }

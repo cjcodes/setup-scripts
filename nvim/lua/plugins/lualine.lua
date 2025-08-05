@@ -17,14 +17,14 @@ return {
       lualine_a = { 'mode' },
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = { 'filename' },
-      lualine_x = { },
+      lualine_x = {},
       lualine_y = { 'lsp_status' },
       lualine_z = { 'location' },
     },
     extensions = {
       'lazy',
       'trouble',
-    }
+    },
   },
   config = function(_, opts)
     local lazy_status = require('lazy.status')
@@ -44,5 +44,5 @@ return {
         },
       },
     }))
-  end
+  end,
 }

@@ -8,8 +8,8 @@ return {
   opts = {
     enabled = function()
       return not vim.tbl_contains({}, vim.bo.filetype)
-        and vim.bo.buftype ~= "nofile"
-        and vim.bo.buftype ~= "prompt"
+        and vim.bo.buftype ~= 'nofile'
+        and vim.bo.buftype ~= 'prompt'
         and vim.b.completion ~= false
     end,
     sources = {

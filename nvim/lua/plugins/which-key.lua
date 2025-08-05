@@ -3,7 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     delay = 600,
-    preset = "helix",
+    preset = 'helix',
   },
   keys = {
     {
@@ -24,5 +24,5 @@ return {
       { '<leader>g', group = 'CopilotChat' },
     })
     w.setup(opts)
-  end
+  end,
 }

@@ -1,7 +1,7 @@
 local opts = {
   number = true,
   relativenumber = true,
-  signcolumn = "yes",
+  signcolumn = 'yes',
 
   shiftwidth = 2,
   tabstop = 2,
@@ -26,7 +26,7 @@ local opts = {
 
   ignorecase = true,
   smartcase = true,
-  backspace = "indent,eol,start",
+  backspace = 'indent,eol,start',
 }
 
 for k, v in pairs(opts) do
