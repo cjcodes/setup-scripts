@@ -41,6 +41,28 @@ return {
         },
       },
     })
+
+    vim.env.NODE_OPTIONS = '--max-old-space-size=8192'
+
+    require('lspconfig')['ts_ls'].setup({
+      cmd = {
+        'typescript-language-server',
+        '--stdio',
+      },
+      flags = {
+        debouce_text_changes = 2000,
+      },
+      settings = {
+        run = 'onSave',
+      },
+    })
+
+    require('lspconfig')['eslint'].setup({
+      settings = {
+        run = 'onSave',
+      },
+    })
+
     require('mason').setup(opts.mason)
     require('mason-lspconfig').setup(opts.lspconfig)
     require('mason-tool-installer').setup(opts.tools)
@@ -48,6 +70,7 @@ return {
     vim.diagnostic.config({
       virtual_lines = false,
       virtual_text = true,
+      update_in_insert = false,
     })
 
     vim.keymap.set('n', '<leader>dl', function()
