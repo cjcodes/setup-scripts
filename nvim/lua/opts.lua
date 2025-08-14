@@ -6,5 +6,7 @@ return {
   lsp_tools = {
     'prettier',
     'stylua',
+    'eslint',
+    'ts_ls',
   },
 }
