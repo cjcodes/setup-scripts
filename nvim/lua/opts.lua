@@ -7,6 +7,6 @@ return {
     'prettier',
     'stylua',
     'eslint',
-    'ts_ls',
+    'vtsls',
   },
 }

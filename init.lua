@@ -184,7 +184,7 @@ function toggleScrCpy()
     return
   end
 
-  t1 = hs.task.new('/opt/homebrew/bin/scrcpy', logOut, { '--kill-adb-on-close', '-S', '--window-height=1320' })
+  t1 = hs.task.new('/opt/homebrew/bin/scrcpy', logOut, { '--kill-adb-on-close', '-S', '--window-height=1320', '--no-audio' })
   t2 = hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' })
 
   t1:setEnvironment({ ADB = '/opt/homebrew/bin/adb' })

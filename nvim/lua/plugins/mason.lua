@@ -29,39 +29,64 @@ return {
     },
   },
   config = function(_, opts)
-    require('lspconfig')['lua_ls'].setup({
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = {
-              'vim', -- for nvim configs
-              'hs', -- for hammerspoon
+    local lspconfig = require('lspconfig')
+
+    if lspconfig.vtsls then
+      lspconfig.vtsls.setup({
+        cmd_env = { NODE_OPTIONS = '--max-old-space-size=8192' },
+        settings = {
+          typescript = {
+            tsserver = { maxTsServerMemory = 8192 },
+            preferences = { includeInlayParameterNameHints = 'none' },
+          },
+          javascript = {
+            preferences = { includeInlayParameterNameHints = 'none' },
+          },
+          vtsls = {
+            autoUseWorkspaceTsdk = true,
+            experimental = { completion = { enableServerSideFuzzyMatch = false } },
+          },
+        },
+      })
+    end
+
+    if lspconfig.lua_ls then
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {
+                'vim', -- for nvim configs
+                'hs', -- for hammerspoon
+              },
             },
           },
         },
-      },
-    })
+      })
+    end
 
-    vim.env.NODE_OPTIONS = '--max-old-space-size=8192'
+    if lspconfig.ts_ls then
+      lspconfig.ts_ls.setup({
+        cmd = {
+          'typescript-language-server',
+          '--stdio',
+        },
+        flags = {
+          debouce_text_changes = 2000,
+        },
+        settings = {
+          run = 'onSave',
+        },
+      })
+    end
 
-    require('lspconfig')['ts_ls'].setup({
-      cmd = {
-        'typescript-language-server',
-        '--stdio',
-      },
-      flags = {
-        debouce_text_changes = 2000,
-      },
-      settings = {
-        run = 'onSave',
-      },
-    })
-
-    require('lspconfig')['eslint'].setup({
-      settings = {
-        run = 'onSave',
-      },
-    })
+    if lspconfig.eslint then
+      lspconfig.eslint.setup({
+        settings = {
+          run = 'onSave',
+        },
+      })
+    end
 
     require('mason').setup(opts.mason)
     require('mason-lspconfig').setup(opts.lspconfig)
