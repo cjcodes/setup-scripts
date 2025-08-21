@@ -3,6 +3,7 @@ return {
   lsps = {
     'lua_ls',
     'vtsls',
+    'copilot',
   },
   lsp_tools = {
     'prettier',
