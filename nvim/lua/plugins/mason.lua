@@ -29,64 +29,59 @@ return {
     },
   },
   config = function(_, opts)
-    local lspconfig = require('lspconfig')
+    vim.env.NODE_OPTIONS = '--max-old-space-size=8192'
 
-    if lspconfig.vtsls then
-      lspconfig.vtsls.setup({
-        cmd_env = { NODE_OPTIONS = '--max-old-space-size=8192' },
-        settings = {
-          typescript = {
-            tsserver = { maxTsServerMemory = 8192 },
-            preferences = { includeInlayParameterNameHints = 'none' },
+    vim.lsp.config('vtsls', {
+      cmd_env = { NODE_OPTIONS = '--max-old-space-size=8192' },
+      settings = {
+        typescript = {
+          tsserver = {
+            maxTsServerMemory = 8192,
+            pluginPaths = { './node_modules' },
           },
-          javascript = {
-            preferences = { includeInlayParameterNameHints = 'none' },
-          },
-          vtsls = {
-            autoUseWorkspaceTsdk = true,
-            experimental = { completion = { enableServerSideFuzzyMatch = false } },
-          },
+          preferences = { includeInlayParameterNameHints = 'none' },
         },
-      })
-    end
+        javascript = {
+          preferences = { includeInlayParameterNameHints = 'none' },
+        },
+        vtsls = {
+          autoUseWorkspaceTsdk = true,
+          experimental = { completion = { enableServerSideFuzzyMatch = false } },
+        },
+      },
+    })
 
-    if lspconfig.lua_ls then
-      lspconfig.lua_ls.setup({
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = {
-                'vim', -- for nvim configs
-                'hs', -- for hammerspoon
-              },
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {
+              'vim', -- for nvim configs
+              'hs', -- for hammerspoon
             },
           },
         },
-      })
-    end
+      },
+    })
 
-    if lspconfig.ts_ls then
-      lspconfig.ts_ls.setup({
-        cmd = {
-          'typescript-language-server',
-          '--stdio',
-        },
-        flags = {
-          debouce_text_changes = 2000,
-        },
-        settings = {
-          run = 'onSave',
-        },
-      })
-    end
+    vim.lsp.config('ts_ls', {
+      cmd = {
+        'typescript-language-server',
+        '--stdio',
+      },
+      flags = {
+        debouce_text_changes = 2000,
+      },
+      settings = {
+        run = 'onSave',
+      },
+    })
 
-    if lspconfig.eslint then
-      lspconfig.eslint.setup({
-        settings = {
-          run = 'onSave',
-        },
-      })
-    end
+    vim.lsp.config('eslint', {
+      settings = {
+        run = 'onSave',
+      },
+    })
 
     require('mason').setup(opts.mason)
     require('mason-lspconfig').setup(opts.lspconfig)
