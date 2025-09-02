@@ -18,6 +18,5 @@ sudo ln -s /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 mkdir -p ~/.{config,codex}
 
-git clone https://github.com/cjcodes/setup-scripts
-ln -s $(pwd)/setup-scripts/nvim ~/.config/nvim
-ln -s $(pwd)/setup-scripts/AGENTS.md ~/.codex/AGENTS.md
+ln -s $(pwd)/nvim ~/.config/nvim
+ln -s $(pwd)/AGENTS.md ~/.codex/AGENTS.md
