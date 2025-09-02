@@ -1,13 +1,22 @@
+local function toggle()
+  require('codex').toggle()
+end
+
+local desc = 'Toggle Codex popup'
+
 return {
   'johnseth97/codex.nvim',
   lazy = true,
   keys = {
     {
       '<A-\\>',
-      function()
-        require('codex').toggle()
-      end,
-      desc = 'Toggle Codex popup',
+      toggle,
+      desc = desc,
+    },
+    {
+      '<A-tab>',
+      toggle,
+      desc = desc,
     },
   },
   opts = {
