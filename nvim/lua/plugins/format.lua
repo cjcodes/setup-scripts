@@ -15,6 +15,7 @@ return {
       graphql = { 'prettier' },
       lua = { 'stylua' },
       python = { 'isort', 'black' },
+      php = { 'php_cs_fixer' },
     },
     format_after_save = {
       lsp_format = 'fallback',
