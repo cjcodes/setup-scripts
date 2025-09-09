@@ -19,3 +19,5 @@ sudo pacman -S ${PACKAGES[@]}
 if [ ! -d ~/.config/nvim ]; then
   ln -s $(pwd)/nvim ~/.config/nvim
 fi
+
+nvim --headless '+Lazy install' +qa

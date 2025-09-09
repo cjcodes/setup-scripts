@@ -3,7 +3,7 @@
 -----------------------
 DEMO_WIDTH = 1920
 DEMO_HEIGHT = 1080
-units = {
+local units = {
   left3 = { x = 0, y = 0, w = 1 / 3, h = 1.00 },
   mid3 = { x = 1 / 3, y = 0, w = 1 / 3, h = 1.00 },
   right3 = { x = 2 / 3, y = 0, w = 1 / 3, h = 1.00 },
@@ -22,8 +22,8 @@ units = {
 
 -- ⇧ ⌥ ⌃ ⌘
 hs.window.animationDuration = 0
-mod = { '⌃', '⌥' }
-extraMod = { '⌃', '⌥', '⌘' }
+local mod = { '⌃', '⌥' }
+local extraMod = { '⌃', '⌥', '⌘' }
 hs.hotkey.bind(mod, 'd', function()
   hs.window.focusedWindow():move(units.left3, nil, true)
 end)
@@ -84,7 +84,7 @@ end)
 -- Typing shortcuts --
 ----------------------
 
-p = hs.chooser
+local p = hs.chooser
   .new(function(data)
     if data then
       hs.eventtap.keyStrokes(data['subText'])
@@ -120,7 +120,7 @@ end)
 -- Scroll Direction --
 ----------------------
 
-scroll_script = [[
+local scroll_script = [[
 try
 do shell script "open x-apple.systempreferences:com.apple.Trackpad-Settings.extension"
 delay 2
@@ -144,8 +144,8 @@ end)
 -- Screen Saver Preventer --
 ----------------------------
 
-caffeine = hs.menubar.new()
-function setCaffeineDisplay(state)
+local caffeine = hs.menubar.new()
+local function setCaffeineDisplay(state)
   if state then
     caffeine:setTitle('🖥️☀️')
   else
@@ -153,7 +153,7 @@ function setCaffeineDisplay(state)
   end
 end
 
-function caffeineClicked()
+local function caffeineClicked()
   setCaffeineDisplay(hs.caffeinate.toggle('displayIdle'))
 end
 
@@ -167,9 +167,9 @@ end
 --------------------------
 
 local t1, t2
-tablet = hs.menubar.new()
+local tablet = hs.menubar.new()
 
-function logOut(exitCode, stdOut, stdErr)
+local function logOut(_, stdOut, stdErr)
   if stdErr ~= nil then
     log:e(stdErr)
   end
@@ -177,14 +177,18 @@ function logOut(exitCode, stdOut, stdErr)
   log:i(stdOut)
 end
 
-function toggleScrCpy()
+local function toggleScrCpy()
   if t1 ~= nil and t1:isRunning() then
     hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' })
     hs.application.applicationForPID(t1:pid()):activate()
     return
   end
 
-  t1 = hs.task.new('/opt/homebrew/bin/scrcpy', logOut, { '--kill-adb-on-close', '-S', '--window-height=1320', '--no-audio' })
+  t1 = hs.task.new(
+    '/opt/homebrew/bin/scrcpy',
+    logOut,
+    { '--kill-adb-on-close', '-S', '--window-height=1320', '--no-audio' }
+  )
   t2 = hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' })
 
   t1:setEnvironment({ ADB = '/opt/homebrew/bin/adb' })
@@ -195,16 +199,30 @@ end
 
 tablet:setClickCallback(toggleScrCpy)
 tablet:setTitle('📱')
+
+------------------
+-- Glean prompt --
+------------------
+local function openGlean()
+  local button, search = hs.dialog.textPrompt('Search Glean', '', '', 'Open', 'Cancel')
+
+  if button == 'Open' then
+    search = hs.http.encodeForQuery(search)
+    hs.urlevent.openURL('https://app.glean.com/search?q=' .. search)
+  end
+end
+hs.hotkey.bind('⌃', 'space', openGlean)
+
 ---------------------------
 -- Quick password typing --
 ---------------------------
 
-function type_password()
-  local f = io.open('password', 'r') -- this is in the ~/.hammerspoon directory, maybe move this if I bring this command back
-  local t = f:read('*line')
-  hs.eventtap.keyStrokes('cjohnson')
-  hs.eventtap.keyStroke({}, 'tab')
-  hs.eventtap.keyStrokes(t)
-end
+-- local function type_password()
+--   local f = io.open('password', 'r') -- this is in the ~/.hammerspoon directory, maybe move this if I bring this command back
+--   local t = f:read('*line')
+--   hs.eventtap.keyStrokes('cjohnson')
+--   hs.eventtap.keyStroke({}, 'tab')
+--   hs.eventtap.keyStrokes(t)
+-- end
 
 -- hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '5', type_password)

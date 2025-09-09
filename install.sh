@@ -15,6 +15,7 @@ wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64
 tar xzvf nvim-linux-x86_64.tar.gz
 sudo mv nvim-linux-x86_64 /opt/nvim
 sudo ln -s /opt/nvim/bin/nvim /usr/local/bin/nvim
+nvim --headless '+Lazy install' +qa
 
 mkdir -p ~/.{config,codex}
 

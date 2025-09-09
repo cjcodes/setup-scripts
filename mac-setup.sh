@@ -188,6 +188,8 @@ function e() {
   nvim && clear
 }
 ' >> ~/.zshrc
+# Initialize nvim plugins to speed up first run
+nvim --headless '+Lazy install' +qa
 
 ###################################
 ### Remove annoying keybindings ###
