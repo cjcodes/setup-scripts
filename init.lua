@@ -202,6 +202,9 @@ end
 tablet:setClickCallback(toggleScrCpy)
 tablet:setTitle('📱')
 
+------------------------
+-- Window open helper --
+------------------------
 local function openWindow(url)
   local m = hs.webview.windowMasks
 
