@@ -202,6 +202,37 @@ end
 tablet:setClickCallback(toggleScrCpy)
 tablet:setTitle('📱')
 
+local function openWindow(url)
+  local m = hs.webview.windowMasks
+
+  local view = hs.webview
+    .new({
+      w = 750,
+      h = 800,
+    })
+    :url(url)
+    :deleteOnClose(true)
+    :windowStyle(m.closable + m.utility + m.titled)
+    :allowNewWindows(false)
+    :closeOnEscape(true)
+    :allowTextEntry(true)
+    :policyCallback(function(action, webview, details)
+      if
+        ((action == 'navigationAction' and details.navigationType == 'linkActivated') or action == 'newWindow')
+        and details.request
+        and details.request.URL
+      then
+        hs.urlevent.openURL(details.request.URL)
+        webview:delete()
+        return false
+      end
+      return true
+    end)
+    :show()
+
+  view:hswindow():centerOnScreen()
+end
+
 ------------------
 -- Glean prompt --
 ------------------
@@ -210,7 +241,7 @@ local function openGlean()
 
   if button == 'Open' then
     search = hs.http.encodeForQuery(search)
-    hs.urlevent.openURL('https://app.glean.com/search?q=' .. search)
+    openWindow('https://app.glean.com/search?q=' .. search)
   end
 end
 hs.hotkey.bind('⌃', 'space', openGlean)
@@ -223,7 +254,7 @@ local function openGPT()
 
   if button == 'Open' then
     search = hs.http.encodeForQuery(search)
-    hs.urlevent.openURL('https://chatgpt.com/?q=' .. search)
+    openWindow('https://chatgpt.com/?q=' .. search)
   end
 end
 hs.hotkey.bind('⌥', 'space', openGPT)
