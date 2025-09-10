@@ -1,3 +1,5 @@
+local log = hs.logger.new('cjcodes', 'info')
+
 -----------------------
 -- WINDOW MANAGEMENT --
 -----------------------

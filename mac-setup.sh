@@ -22,6 +22,7 @@ PACKAGES=(
 
 CASKS=(
   brave-browser
+  dbeaver-community
   deezer
   font-fira-code-nerd-font
   hammerspoon
