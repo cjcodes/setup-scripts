@@ -213,6 +213,19 @@ local function openGlean()
 end
 hs.hotkey.bind('⌃', 'space', openGlean)
 
+--------------------
+-- ChatGPT Prompt --
+--------------------
+local function openGPT()
+  local button, search = hs.dialog.textPrompt('Ask GPT', '', '', 'Open', 'Cancel')
+
+  if button == 'Open' then
+    search = hs.http.encodeForQuery(search)
+    hs.urlevent.openURL('https://chatgpt.com/?q=' .. search)
+  end
+end
+hs.hotkey.bind('⌥', 'space', openGPT)
+
 ---------------------------
 -- Quick password typing --
 ---------------------------
