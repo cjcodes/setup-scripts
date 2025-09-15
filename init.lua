@@ -168,8 +168,7 @@ end
 -- Remote Access Phone --
 --------------------------
 
-local t1, t2
-local tablet = hs.menubar.new()
+local task
 
 local function logOut(_, stdOut, stdErr)
   if stdErr ~= nil then
@@ -180,27 +179,21 @@ local function logOut(_, stdOut, stdErr)
 end
 
 local function toggleScrCpy()
-  if t1 ~= nil and t1:isRunning() then
+  if task ~= nil and task:isRunning() then
     hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' })
-    hs.application.applicationForPID(t1:pid()):activate()
+    hs.application.applicationForPID(task:pid()):activate()
     return
   end
 
-  t1 = hs.task.new(
-    '/opt/homebrew/bin/scrcpy',
-    logOut,
-    { '--kill-adb-on-close', '-S', '--window-height=1320', '--no-audio' }
-  )
-  t2 = hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' })
+  task = hs.task
+    .new('/opt/homebrew/bin/scrcpy', logOut, { '--kill-adb-on-close', '-S', '--window-height=1000', '--no-audio' })
+    :setEnvironment({ ADB = '/opt/homebrew/bin/adb' })
+    :start()
 
-  t1:setEnvironment({ ADB = '/opt/homebrew/bin/adb' })
-
-  t1:start()
-  t2:start()
+  hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' }):start()
 end
 
-tablet:setClickCallback(toggleScrCpy)
-tablet:setTitle('📱')
+hs.menubar.new():setClickCallback(toggleScrCpy):setTitle('📱')
 
 ------------------------
 -- Window open helper --
@@ -215,7 +208,7 @@ local function openWindow(url)
     })
     :url(url)
     :deleteOnClose(true)
-    :windowStyle(m.closable + m.utility + m.titled)
+    :windowStyle(m.closable + m.utility + m.titled + m.texturedBackground)
     :allowNewWindows(false)
     :closeOnEscape(true)
     :allowTextEntry(true)
