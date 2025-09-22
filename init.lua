@@ -169,6 +169,7 @@ end
 --------------------------
 
 local task
+local phoneIcon = hs.menubar.new()
 
 local function logOut(_, stdOut, stdErr)
   if stdErr ~= nil then
@@ -193,7 +194,7 @@ local function toggleScrCpy()
   hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' }):start()
 end
 
-hs.menubar.new():setClickCallback(toggleScrCpy):setTitle('📱')
+phoneIcon:setClickCallback(toggleScrCpy):setTitle('📱')
 
 ------------------------
 -- Window open helper --
