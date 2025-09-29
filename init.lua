@@ -146,12 +146,12 @@ end)
 -- Screen Saver Preventer --
 ----------------------------
 
-local caffeine = hs.menubar.new()
+Caffeine = hs.menubar.new()
 local function setCaffeineDisplay(state)
   if state then
-    caffeine:setTitle('🖥️☀️')
+    Caffeine:setTitle('🖥️☀️')
   else
-    caffeine:setTitle('🖥️🌙')
+    Caffeine:setTitle('🖥️🌙')
   end
 end
 
@@ -159,8 +159,8 @@ local function caffeineClicked()
   setCaffeineDisplay(hs.caffeinate.toggle('displayIdle'))
 end
 
-if caffeine then
-  caffeine:setClickCallback(caffeineClicked)
+if Caffeine then
+  Caffeine:setClickCallback(caffeineClicked)
   setCaffeineDisplay(hs.caffeinate.get('displayIdle'))
 end
 
@@ -169,7 +169,7 @@ end
 --------------------------
 
 local task
-local phoneIcon = hs.menubar.new()
+PhoneIcon = hs.menubar.new()
 
 local function logOut(_, stdOut, stdErr)
   if stdErr ~= nil then
@@ -194,7 +194,9 @@ local function toggleScrCpy()
   hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' }):start()
 end
 
-phoneIcon:setClickCallback(toggleScrCpy):setTitle('📱')
+if PhoneIcon then
+  PhoneIcon:setClickCallback(toggleScrCpy):setTitle('📱')
+end
 
 ------------------------
 -- Window open helper --
