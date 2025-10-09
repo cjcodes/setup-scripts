@@ -17,6 +17,10 @@ return {
     git = {
       ignore = false,
     },
+    update_focused_file = {
+      enable = false,
+      update_cwd = false,
+    },
   },
   config = function(_, opts)
     require('nvim-tree').setup(opts)
@@ -39,6 +43,6 @@ return {
     vim.keymap.set('n', '<leader>er', nvimTree.tree.reload, { desc = 'Reload nvim-tree' })
 
     vim.api.nvim_create_autocmd({ 'VimEnter' }, { callback = nvimTree.tree.open })
-    vim.api.nvim_create_autocmd({ 'BufReadPre' }, { callback = nvimTree.tree.find_file })
+    -- vim.api.nvim_create_autocmd({ 'BufReadPre' }, { callback = nvimTree.tree.find_file })
   end,
 }
