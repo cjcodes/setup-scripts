@@ -7,7 +7,6 @@ PACKAGES=(
   sqlite
   wget
   github-cli
-  terraform
   fd
   ripgrep
   neovim
