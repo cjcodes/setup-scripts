@@ -9,18 +9,16 @@ PACKAGES=(
   gh
   jq
   make
-  mysql-client
   neovim
   nmap
   ripgrep
-  sqlite
   telnet
-  terraform
   watch
   wget
 )
 
 CASKS=(
+  firefox
   brave-browser
   dbeaver-community
   deezer
@@ -28,9 +26,8 @@ CASKS=(
   hammerspoon
   iterm2
   monitorcontrol
-  obsidian
-  ollama
   visual-studio-code
+  yubico-authenticator
 )
 
 VSCODE_EXT=(
@@ -229,5 +226,4 @@ The following browser extensions are ready for install once you set your default
 https://chromewebstore.google.com/detail/meetings-page-auto-closer/pbgidoglkjhfgjhalbbiiahdlokjcplb
 https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
 https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
-https://chromewebstore.google.com/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
 "
