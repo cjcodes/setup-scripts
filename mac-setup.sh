@@ -11,6 +11,7 @@ PACKAGES=(
   make
   neovim
   nmap
+  pure
   ripgrep
   telnet
   watch
@@ -114,7 +115,13 @@ ln -s $(pwd)/vscode-settings.json $CODE_SETTINGS
 
 if [ ! -d ~/.oh-my-zsh ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  sed -i.bak 's/\(plugins=\).*$/\1(git asdf)/' ~/.zshrc
+  sed -i.bak 's/\(plugins=\).*$/\1(asdf)/' ~/.zshrc
+  sed -i.bak 's/\(ZSH_THEME=\).*$/\1\"\"/' ~/.zshrc
+
+  echo '
+autoload -U promptinit; promptinit
+prompt pure
+' >> ~/.zshrc
 fi
 
 ############
@@ -178,14 +185,6 @@ if [ ! -d ~/.config/nvim ]; then
   ln -s $(pwd)/nvim ~/.config/nvim
 fi
 
-echo '
-function e() {
-  if [ -f "venv/bin/activate" ]; then
-    source venv/bin/activate
-  fi
-  nvim && clear
-}
-' >> ~/.zshrc
 # Initialize nvim plugins to speed up first run
 nvim --headless '+Lazy install' +qa
 
