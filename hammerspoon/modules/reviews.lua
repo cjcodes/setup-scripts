@@ -31,9 +31,30 @@ local GH_ARGS = {
 
 local reviewMenu = hs.menubar.new()
 local prs = {}
+local prevCount = 0
+-- Set when the count goes up; cleared when the menu is opened.
+local highlighted = false
 
--- Builds the dropdown menu from the latest results. Each click opens the PR url.
+-- Renders the menu bar title, coloring it orange while highlighted.
+local function updateTitle()
+  local text = '👀 ' .. #prs
+  if highlighted then
+    reviewMenu:setTitle(hs.styledtext.new(text, {
+      color = { red = 1, green = 0.5, blue = 0 },
+    }))
+  else
+    reviewMenu:setTitle(text)
+  end
+end
+
+-- Builds the dropdown menu from the latest results. Runs each time the menu is
+-- opened, so it also clears the highlight. Each click opens the PR url.
 local function buildMenu()
+  if highlighted then
+    highlighted = false
+    updateTitle()
+  end
+
   if #prs == 0 then
     return { { title = 'No PRs to review', disabled = true } }
   end
@@ -50,10 +71,6 @@ local function buildMenu()
   return items
 end
 
-local function updateTitle()
-  reviewMenu:setTitle('👀 ' .. #prs)
-end
-
 local function onGhDone(exitCode, stdOut, stdErr)
   if exitCode ~= 0 then
     log:e('reviews: gh exited ' .. exitCode .. ': ' .. (stdErr or ''))
@@ -67,6 +84,10 @@ local function onGhDone(exitCode, stdOut, stdErr)
   end
 
   prs = decoded
+  if #prs > prevCount then
+    highlighted = true
+  end
+  prevCount = #prs
   updateTitle()
 end
 
