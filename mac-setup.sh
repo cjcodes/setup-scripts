@@ -19,15 +19,12 @@ PACKAGES=(
 )
 
 CASKS=(
-  firefox
-  brave-browser
-  dbeaver-community
   deezer
   font-fira-code-nerd-font
   hammerspoon
   iterm2
   monitorcontrol
-  visual-studio-code
+  notunes
   yubico-authenticator
 )
 
@@ -168,10 +165,8 @@ defaults write com.googlecode.iterm2 NoSyncPermissionToShowTip -bool false
 ### Hammerspoon automation ###
 ##############################
 
-if [ ! -d ~/.hammerspoon ]; then
-  mkdir ~/.hammerspoon
-  ln -s $(pwd)/init.lua ~/.hammerspoon/init.lua
-fi
+rm -rf ~/.hammerspoon
+ln -s $(pwd)/hammerspoon ~/.hammerspoon
 
 #################
 ### Vim setup ###
@@ -206,6 +201,12 @@ git config --global push.autoSetupRemote true
 git config --global core.excludesfile ~/.gitignore_global
 echo '.DS_Store' >> ~/.gitignore_global
 echo '.phpactor.json' >> ~/.gitignore_global
+
+
+#########################
+### notunes >> Deezer ###
+#########################
+defaults write digital.twisted.noTunes replacement /Applications/Deezer.app
 
 #################
 ### wallpaper ###
