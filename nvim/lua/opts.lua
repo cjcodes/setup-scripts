@@ -2,8 +2,8 @@ return {
   llm = 'copilot',
   lsps = {
     'lua_ls',
-    'tsgo',
-    'copilot',
+    -- 'tsgo',
+    -- 'copilot',
   },
   lsp_tools = {
     'prettier',

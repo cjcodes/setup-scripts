@@ -10,7 +10,7 @@ return {
         'NvimTree',
         'trouble',
       },
-      theme = 'catppuccin',
+      theme = 'catppuccin-nvim',
       section_separators = '',
     },
     sections = {
