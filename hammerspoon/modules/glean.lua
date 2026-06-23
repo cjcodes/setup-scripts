@@ -12,3 +12,5 @@ local function openGlean()
 end
 
 hs.hotkey.bind('⌃', 'space', openGlean)
+
+return {}

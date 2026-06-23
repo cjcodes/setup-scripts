@@ -29,6 +29,8 @@ local function toggleScrCpy()
   hs.task.new('/opt/homebrew/bin/adb', logOut, { 'shell', 'input', 'keyevent', 'KEYCODE_WAKEUP' }):start()
 end
 
--- if PhoneIcon then
---   PhoneIcon:setClickCallback(toggleScrCpy):setTitle('📱')
+-- if phoneIcon then
+--   phoneIcon:setClickCallback(toggleScrCpy):setTitle('📱')
 -- end
+
+return {}

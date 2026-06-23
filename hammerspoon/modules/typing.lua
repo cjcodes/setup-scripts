@@ -1,6 +1,6 @@
 -- Typing shortcuts: a chooser that types the selected snippet.
 
-local p = hs.chooser
+local chooser = hs.chooser
   .new(function(data)
     if data then
       hs.eventtap.keyStrokes(data['subText'])
@@ -29,5 +29,7 @@ local p = hs.chooser
   :rows(5)
 
 hs.hotkey.bind({ '⌘', '⌃' }, '`', function()
-  p:show()
+  chooser:show()
 end)
+
+return { chooser = chooser }

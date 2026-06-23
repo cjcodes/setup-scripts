@@ -100,3 +100,5 @@ updateTitle()
 
 Timers.reviews = hs.timer.doEvery(300, refresh)
 refresh()
+
+return { menu = reviewMenu }

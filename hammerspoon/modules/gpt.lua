@@ -12,3 +12,5 @@ local function openGPT()
 end
 
 hs.hotkey.bind('⌥', 'space', openGPT)
+
+return {}

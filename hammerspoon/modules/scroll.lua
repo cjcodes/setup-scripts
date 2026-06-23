@@ -19,3 +19,5 @@ end try
 hs.hotkey.bind({ '⌥', '⌃', '⌘' }, '4', function()
   hs.osascript.applescript(scroll_script)
 end)
+
+return {}

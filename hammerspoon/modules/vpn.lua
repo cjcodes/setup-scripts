@@ -50,3 +50,5 @@ end
 -- Check every n seconds
 Timers.vpn = hs.timer.doEvery(30, checkVpnStatus)
 checkVpnStatus()
+
+return { menu = vpnMenu }

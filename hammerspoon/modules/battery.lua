@@ -21,3 +21,5 @@ end
 
 Timers.battery = hs.timer.doEvery(30, updateBatteryMenu)
 updateBatteryMenu()
+
+return { menu = batteryMenu }

@@ -86,3 +86,5 @@ hs.hotkey.bind(extraMod, 't', function()
   -- hs.window.focusedWindow():centerOnScreen()
   -- hs.window.focusedWindow():move({ x = 0 }, nil, true)
 end)
+
+return {}
