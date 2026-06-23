@@ -18,7 +18,7 @@ local GH_ARGS = {
   'GET',
   'search/issues',
   '--raw-field',
-  'q=is:pr user-review-requested:@me is:open',
+  'q=is:pr user-review-requested:@me is:open draft:false',
   '--field',
   'sort=created',
   '--field',
