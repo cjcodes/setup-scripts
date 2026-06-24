@@ -51,4 +51,13 @@ end
 Timers.vpn = hs.timer.doEvery(30, checkVpnStatus)
 checkVpnStatus()
 
-return { menu = vpnMenu }
+-- Anchor the menu bar item AND the icon images against garbage collection.
+-- The icons are module locals whose only live reference is flashVpnIcon's
+-- closure, kept reachable by Timers.vpnFlash. When the VPN connects,
+-- hideVpnIcon() stops that timer and clears Timers.vpnFlash, dropping the last
+-- anchor on the images. A later GC cycle then collects them, so the next time
+-- the VPN drops, setIcon() is handed a dead hs.image and nothing renders --
+-- the icon "disappears hours after a reload". Holding the icons in the
+-- returned table (kept alive via Modules.vpn) keeps them valid for the
+-- process lifetime.
+return { menu = vpnMenu, iconA = vpnIconA, iconB = vpnIconB }
