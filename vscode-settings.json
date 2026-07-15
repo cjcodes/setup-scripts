@@ -1,48 +1,59 @@
 {
-  "editor.minimap.enabled": false,
-  "workbench.startupEditor": "none",
-  "editor.formatOnSave": true,
-  "eslint.alwaysShowStatus": true,
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "editor.tabSize": 2,
-  "explorer.confirmDelete": false,
   "git.autofetch": true,
-  "breadcrumbs.enabled": false,
-  "[python]": {
-    "editor.formatOnType": true
-  },
-  "git.confirmSync": false,
-  "[json]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "diffEditor.ignoreTrimWhitespace": false,
-  "files.watcherExclude": {
-    "**/.bloop": true,
-    "**/.metals": true,
-    "**/.ammonite": true
-  },
-  "window.commandCenter": false,
-  "workbench.statusBar.visible": false,
-  "workbench.activityBar.location": "hidden",
-  "nxConsole.showNodeVersionOnStartup": false,
-  "extensions.ignoreRecommendations": true,
-  "workbench.colorTheme": "Nord Light",
-  "workbench.preferredDarkColorTheme": "Nord",
-  "workbench.preferredLightColorTheme": "Nord Light",
-  "window.autoDetectColorScheme": true,
-  "update.showReleaseNotes": false,
-  "gitlens.showWhatsNewAfterUpgrades": false,
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+  "editor.minimap.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "debug.javascript.defaultRuntimeExecutable": {
-    "pwa-node": "node"
+  "files.insertFinalNewline": true,
+  "editor.autoClosingQuotes": "never",
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.formatOnSave": true,
+  "search.useGlobalIgnoreFiles": true,
+  "explorer.autoReveal": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "prettier.jsxSingleQuote": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
+  "prettier.bracketSameLine": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "redhat.telemetry.enabled": false,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "editor.tabSize": 2,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always",
+  },
+  "workbench.colorTheme": "Catppuccin Latte",
+  "workbench.preferredDarkColorTheme": "Catppuccin Frappé",
+  "workbench.preferredLightColorTheme": "Catppuccin Latte",
+  "git.confirmSync": false,
+  "workbench.startupEditor": "none",
   "makefile.configureOnOpen": false,
-  "svelte.enable-ts-plugin": true
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+  },
+  "editor.lineNumbers": "relative",
+  "zenMode.hideLineNumbers": false,
+  "workbench.navigationControl.enabled": false,
+  "mdb.confirmRunAll": false,
+  "workbench.activityBar.location": "hidden",
+  "workbench.editor.editorActionsLocation": "hidden",
+  "workbench.layoutControl.enabled": false,
+  "editor.fontFamily": "FiraCode Nerd Font Mono, Menlo, Monaco, 'Courier New', monospace",
+  "git.replaceTagsWhenPull": true,
+  "typescript.preferences.organizeImports": {},
+  "git.blame.editorDecoration.enabled": false,
+  "git.blame.statusBarItem.enabled": false,
+  "zenMode.fullScreen": false,
+  "editor.fontSize": 11,
+  "update.showReleaseNotes": false,
+  "mdb.mcp.server": "prompt",
+  "chat.disableAIFeatures": true,
 }
