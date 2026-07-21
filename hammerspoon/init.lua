@@ -14,8 +14,6 @@ local MODULES = {
   'scroll',
   'caffeine',
   'scrcpy',
-  'glean',
-  'gpt',
   'battery',
   'vpn',
   'reviews',
