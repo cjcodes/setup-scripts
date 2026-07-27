@@ -1,2 +1,6 @@
 theme = Catppuccin Latte
 font-family = "FiraCode Nerd Font Mono"
+macos-titlebar-style = tabs
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig

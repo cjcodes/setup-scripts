@@ -4,7 +4,6 @@ TAPS=()
 
 PACKAGES=(
   adr-tools
-  asdf
   fd
   gh
   ghostty
@@ -20,7 +19,6 @@ PACKAGES=(
 )
 
 CASKS=(
-  deezer
   font-fira-code-nerd-font
   hammerspoon
   monitorcontrol
@@ -30,14 +28,9 @@ CASKS=(
 
 VSCODE_EXT=(
   EditorConfig.EditorConfig
-  Orta.vscode-jest
-  arcticicestudio.nord-visual-studio-code
   bierner.markdown-mermaid
   davidanson.vscode-markdownlint
-  dbaeumer.vscode-eslint
-  eamodio.gitlens
   esbenp.prettier-vscode
-  huytd.nord-light
   ms-python.black-formatter
   ms-python.debugpy
   ms-python.python
@@ -112,13 +105,15 @@ ln -s $(pwd)/vscode-settings.json $CODE_SETTINGS
 
 if [ ! -d ~/.oh-my-zsh ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  sed -i.bak 's/\(plugins=\).*$/\1(asdf)/' ~/.zshrc
-  sed -i.bak 's/\(ZSH_THEME=\).*$/\1\"\"/' ~/.zshrc
+  mv -f ~/.zshrc.pre-oh-my-zsh ~/.zshrc
 
   echo '
-autoload -U promptinit; promptinit
-prompt pure
+source ~/.zsh.rc/config.zsh
 ' >> ~/.zshrc
+fi
+
+if [ ! -d ~/.zsh.rc ]; then
+  ln -s $(pwd)/zsh ~/.zsh.rc 
 fi
 
 ############
@@ -216,6 +211,5 @@ echo "
 The following browser extensions are ready for install once you set your default browser to Brave:
 
 https://chromewebstore.google.com/detail/meetings-page-auto-closer/pbgidoglkjhfgjhalbbiiahdlokjcplb
-https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
 https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
 "
