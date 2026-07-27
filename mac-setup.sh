@@ -7,6 +7,7 @@ PACKAGES=(
   asdf
   fd
   gh
+  ghostty
   jq
   make
   neovim
@@ -22,7 +23,6 @@ CASKS=(
   deezer
   font-fira-code-nerd-font
   hammerspoon
-  iterm2
   monitorcontrol
   notunes
   yubico-authenticator
@@ -147,19 +147,11 @@ if ! defaults read com.apple.terminal | grep -q Nord; then
   rm Nord-cj.terminal
 fi
 
-############################
-#### iterm2 preferences ####
-############################
+if [ ! -d ~/.config/ghostty ]; then
+  mkdir -p ~/.config/ghostty
+  ln -s $(pwd)/config.ghostty ~/.config/ghostty/config.ghostty
+fi
 
-defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-defaults write com.googlecode.iterm2 PrefsCustomFolder ~/code/setup-scripts/iterm2-settings
-defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile -bool true
-defaults write com.googlecode.iterm2 "NoSyncNeverRemindPrefsChangesLostForFile_selection" 2
-defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
-defaults write com.googlecode.iterm2 SUSendProfileInfo -bool false
-defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste -bool true
-defaults write com.googlecode.iterm2 NoSyncDoNotWarnBeforeMultilinePaste_selection -bool false
-defaults write com.googlecode.iterm2 NoSyncPermissionToShowTip -bool false
 
 ##############################
 ### Hammerspoon automation ###
